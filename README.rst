@@ -2,12 +2,6 @@
 browsereload-mac.vim
 ========================
 
-Author: tell-k <https://twitter.com/tell_k>
-Last Change: 01-Jun-2011.
-Version: 1.0.0
-WebPage: https://github.com/tell-k/vim-browsereload-mac.vim
-License: BSD
-
 Description
 --------------------
 
