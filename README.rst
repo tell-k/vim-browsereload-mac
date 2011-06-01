@@ -50,7 +50,7 @@ stop auto reload::
  :FrStop
  :SrStop
  :OrStop
- :ArStart
+ :ArStop
 
 
 Settings
