@@ -108,8 +108,12 @@ Installation
 
 ::
 
- wget
- cp -pr ./plugin/browsereload-mac.vim ~/.vim/plugin/
+ wget https://github.com/tell-k/vim-browsereload-mac.vim/tarball/master -O browsereload-mac-vim.tar.gz
+ tar xvzf browsereload-mac-vim.tar.gz
+ mv tell-k-vim-browsereload-mac.vim-* browsereload-mac-vim
+ cp -pr ./browsereload-mac-vim/plugin/browsereload-mac.vim ~/.vim/plugin/ 
+
+see install.sh
 
 Usage
 --------------------
@@ -149,5 +153,6 @@ if you wan to change fourcus application, change variables "g:returnApps" to you
 
  "change this variables
  let g:returnApp = "Terminal" 
+
 
 " }}}
