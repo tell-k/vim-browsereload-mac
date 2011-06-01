@@ -96,7 +96,8 @@ browsereload-mac.vim
 Description
 --------------------
 
-vim plugin to reflesh your browser. works only MacOS
+vim plugin to reflesh your browser. 
+this plugin works only MacOS.
 
 Required
 --------------------
@@ -113,7 +114,7 @@ Installation
  mv tell-k-vim-browsereload-mac.vim-* browsereload-mac-vim
  cp -pr ./browsereload-mac-vim/plugin/browsereload-mac.vim ~/.vim/plugin/ 
 
-see install.sh
+see also install.sh
 
 Usage
 --------------------
@@ -147,12 +148,13 @@ Settings
 --------------------
 
 after reflesh browser. forcus "Terminal" apps.
-if you wan to change fourcus application, change variables "g:returnApps" to your appliation
+
+if you wan to change fourcus application, 
+change variables "g:returnApps" to your appliation.
 
 ::
 
  "change this variables
  let g:returnApp = "Terminal" 
-
 
 " }}}
