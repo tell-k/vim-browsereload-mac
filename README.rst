@@ -18,47 +18,47 @@ Installation
 
 ::
 
- wget https://github.com/tell-k/vim-browsereload-mac.vim/tarball/master -O browsereload-mac-vim.tar.gz
+ wget https://github.com/tell-k/vim-browsereload-mac/tarball/master -O browsereload-mac-vim.tar.gz
  tar xvzf browsereload-mac-vim.tar.gz
- mv tell-k-vim-browsereload-mac.vim-* browsereload-mac-vim
+ mv tell-k-vim-browsereload-mac-* browsereload-mac-vim
  cp -pr ./browsereload-mac-vim/plugin/browsereload-mac.vim ~/.vim/plugin/ 
 
-see install.sh
+see also install.sh
 
 Usage
 --------------------
 
 browser reload::
 
- :Cr  //reload "Google Chrome"
- :Fr  //reload "Firefox"
- :Sr  //reload "Safari"
- :Or  //reload "Opera"
- :Ar  //reload ubove all browser
+ :ChromeReload      //reload "Google Chrome"
+ :FirefoxReload     //reload "Firefox"
+ :SafariReload      //reload "Safari"
+ :OperaReload       //reload "Opera"
+ :AllBrowserReload  //reload all browser
 
 start auto reload::
 
- :CrStart  
- :FrStart  
- :SrStart  
- :OrStart  
- :ArStart  
+ :ChromeReloadStart  
+ :FirefoxReloadStart  
+ :SafariReloadStart  
+ :OperaReloadStart  
+ :AllBrowserReloadStart  
 
 stop auto reload::
 
- :CrStop
- :FrStop
- :SrStop
- :OrStop
- :ArStop
+ :ChromeReloadStop
+ :FirefoxReloadStop
+ :SafariReloadStop
+ :OperaReloadStop
+ :AllBrowserReloadStart
 
 
 Settings
 --------------------
 
-after reflesh browser. forcus "Terminal" apps.
+after reload browser. forcus "Terminal" apps.
 
-if you wan to change fourcus application, 
+if you want to change fourcus application, 
 change variables "g:returnApps" to your appliation.
 
 ::
@@ -66,3 +66,34 @@ change variables "g:returnApps" to your appliation.
  "change this variables
  let g:returnApp = "Terminal" 
 
+if you want to stop returnApp, 
+change variables "g:returnAppFlag" to 0
+
+::
+
+ "default is 1
+ let g:returnAppFlag = 1
+
+if you want old style commad, 
+write this setting in your .vimrc
+
+::
+
+ "reload
+ command! -bar Cr silent ChromeReload
+ command! -bar Fr silent FirefoxReload
+ command! -bar Sr silent SafariReload
+ command! -bar Or silent OperaReload
+ command! -bar Ar silent AllBrowserReload
+ "auto reload start
+ command! -bar CrStart silent ChromeReloadStart
+ command! -bar FrStart silent FirefoxReloadStart
+ command! -bar SrStart silent SafariReloadStart
+ command! -bar OrStart silent OperaReloadStart
+ command! -bar ArStart silent AllBrowserReloadStart
+ "auto reload stop
+ command! -bar CrStop silent ChromeReloadStop
+ command! -bar FrStop silent FirefoxReloadStop
+ command! -bar SrStop silent SafariReloadStop
+ command! -bar OrStop silent OperaReloadStop
+ command! -bar ArStop silent AllBrowserReloadStop

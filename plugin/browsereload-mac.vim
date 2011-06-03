@@ -8,7 +8,12 @@
 "==========================================================
 " see also README.rst
 
-" {{{ Global Variables
+" {{{ Global variables
+"
+" forcused application enabled 1:True 0:False
+if !exists('g:returnAppFlag')
+  let g:returnAppFlag = 1
+endif 
 
 " forcused application name after browser reload
 if !exists('g:returnApp')
@@ -34,7 +39,7 @@ endif
 " }}}
 " {{{ Reload()
 
-func! Reload(app, ...)
+func! s:Reload(app, ...)
     let l:appcmd    = "silent !osascript -e 'tell app \"" . a:app . "\" to activate'"
 
     if a:0
@@ -45,44 +50,50 @@ func! Reload(app, ...)
 
     let l:returncmd = " -e 'tell app \"" . g:returnApp . "\" to activate'"
     let l:devnull = g:debugMode ? " " : "> /dev/null 2>&1"
-    exec l:appcmd . l:reloadcmd . l:returncmd . l:devnull
+
+    if g:returnAppFlag
+        exec l:appcmd . l:reloadcmd . l:returncmd . l:devnull
+    else
+        exec l:appcmd . l:reloadcmd . l:devnull
+    endif 
+
 endfunc
 
 " }}}
 
 " {{{ setting Google Chrome 
 
-command! -bar Cr call Reload("Google Chrome", 'tell application "Google Chrome" to reload active tab of window 1') 
-command! -bar CrStart CrStop | autocmd BufWritePost <buffer> Cr
-command! -bar CrStop autocmd! BufWritePost <buffer>
+command! -bar ChromeReload call s:Reload("Google Chrome", 'tell application "Google Chrome" to reload active tab of window 1') 
+command! -bar ChromeReloadStart ChromeReloadStop | autocmd BufWritePost <buffer> ChromeReload
+command! -bar ChromeReloadStop autocmd! BufWritePost <buffer>
 
 " }}}
 " {{{ setting Firefox
 
-command! -bar Fr call Reload("Firefox")
-command! -bar FrStart FrStop | autocmd BufWritePost <buffer> Fr
-command! -bar FrStop autocmd! BufWritePost <buffer>
+command! -bar FirefoxReload call s:Reload("Firefox")
+command! -bar FirefoxReloadStart FirefoxReloadStop | autocmd BufWritePost <buffer> FirefoxReload
+command! -bar FirefoxReloadStop autocmd! BufWritePost <buffer>
 
 " }}}
 " {{{ setting Safari
 
-command! -bar Sr call Reload("Safari")
-command! -bar SrStart SrStop | autocmd BufWritePost <buffer> Sr
-command! -bar SrStop autocmd! BufWritePost <buffer>
+command! -bar SafariReload call s:Reload("Safari")
+command! -bar SafariReloadStart SafariReloadStop | autocmd BufWritePost <buffer> SafariReload
+command! -bar SafariReloadStop autocmd! BufWritePost <buffer>
 
 " }}}
 " {{{ setting Opera
 
-command! -bar Or call Reload("Opera")
-command! -bar OrStart OrStop | autocmd BufWritePost <buffer> Or
-command! -bar OrStop autocmd! BufWritePost <buffer>
+command! -bar OperaReload call s:Reload("Opera")
+command! -bar OperaReloadStart OperaReloadStop | autocmd BufWritePost <buffer> OperaReload
+command! -bar OperaReloadStop autocmd! BufWritePost <buffer>
 
 " }}}
 " {{{ setting all browser. reload at the same time
 
-command! -bar Ar silent Or | Sr | Fr | Cr 
-command! -bar ArStart ArStop | autocmd BufWritePost <buffer> Ar
-command! -bar ArStop autocmd! BufWritePost <buffer>
+command! -bar AllBrowserReload silent OperaReload | SafariReload | FirefoxReload | ChromeReload 
+command! -bar AllBrowserReloadStart AllBrowserReloadStop | autocmd BufWritePost <buffer> AllBrowserReload
+command! -bar AllBrowserReloadStop autocmd! BufWritePost <buffer>
 
 " }}}
 
@@ -109,9 +120,9 @@ Installation
 
 ::
 
- wget https://github.com/tell-k/vim-browsereload-mac.vim/tarball/master -O browsereload-mac-vim.tar.gz
+ wget https://github.com/tell-k/vim-browsereload-mac/tarball/master -O browsereload-mac-vim.tar.gz
  tar xvzf browsereload-mac-vim.tar.gz
- mv tell-k-vim-browsereload-mac.vim-* browsereload-mac-vim
+ mv tell-k-vim-browsereload-mac-* browsereload-mac-vim
  cp -pr ./browsereload-mac-vim/plugin/browsereload-mac.vim ~/.vim/plugin/ 
 
 see also install.sh
@@ -121,40 +132,72 @@ Usage
 
 browser reload::
 
- :Cr  //reload "Google Chrome"
- :Fr  //reload "Firefox"
- :Sr  //reload "Safari"
- :Or  //reload "Opera"
- :Ar  //reload ubove all browser
+ :ChromeReload      //reload "Google Chrome"
+ :FirefoxReload     //reload "Firefox"
+ :SafariReload      //reload "Safari"
+ :OperaReload       //reload "Opera"
+ :AllBrowserReload  //reload all browser
 
 start auto reload::
 
- :CrStart  
- :FrStart  
- :SrStart  
- :OrStart  
- :ArStart  
+ :ChromeReloadStart  
+ :FirefoxReloadStart  
+ :SafariReloadStart  
+ :OperaReloadStart  
+ :AllBrowserReloadStart  
 
 stop auto reload::
 
- :CrStop
- :FrStop
- :SrStop
- :OrStop
- :ArStart
+ :ChromeReloadStop
+ :FirefoxReloadStop
+ :SafariReloadStop
+ :OperaReloadStop
+ :AllBrowserReloadStart
 
 
 Settings
 --------------------
 
-after reflesh browser. forcus "Terminal" apps.
+after reload browser. forcus "Terminal" apps.
 
-if you wan to change fourcus application, 
+if you want to change fourcus application, 
 change variables "g:returnApps" to your appliation.
 
 ::
 
  "change this variables
  let g:returnApp = "Terminal" 
+
+if you want to stop returnApp, 
+change variables "g:returnAppFlag" to 0
+
+::
+
+ "default is 1
+ let g:returnAppFlag = 0
+
+if you want old style commad, 
+write this setting in your .vimrc
+
+::
+
+ "reload
+ command! -bar Cr silent ChromeReload
+ command! -bar Fr silent FirefoxReload
+ command! -bar Sr silent SafariReload
+ command! -bar Or silent OperaReload
+ command! -bar Ar silent AllBrowserReload
+ "auto reload start
+ command! -bar CrStart silent ChromeReloadStart
+ command! -bar FrStart silent FirefoxReloadStart
+ command! -bar SrStart silent SafariReloadStart
+ command! -bar OrStart silent OperaReloadStart
+ command! -bar ArStart silent AllBrowserReloadStart
+ "auto reload stop
+ command! -bar CrStop silent ChromeReloadStop
+ command! -bar FrStop silent FirefoxReloadStop
+ command! -bar SrStop silent SafariReloadStop
+ command! -bar OrStop silent OperaReloadStop
+ command! -bar ArStop silent AllBrowserReloadStop
 
 " }}}
