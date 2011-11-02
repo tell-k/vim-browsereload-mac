@@ -3,18 +3,18 @@ browsereload-mac.vim
 ========================
 
 Description
---------------------
+=====================
 
 vim plugin to reflesh your browser. 
-this plugin works only MacOS.
+this plugin works only MacOSX.
 
 Required
---------------------
+=====================
 
 osascript(AppleScript command)
 
 Installation
---------------------
+=====================
 
 ::
 
@@ -26,7 +26,7 @@ Installation
 see also install.sh
 
 Note
---------------------
+=====================
 
 if you want to reload Firefox. Please change your System Preferences on MacOSX as below.
 
@@ -36,7 +36,7 @@ check "Enable access for assistive devices"::
 
 
 Usage
---------------------
+=====================
 
 browser reload::
 
@@ -64,7 +64,7 @@ stop auto reload::
 
 
 Settings
---------------------
+=====================
 
 after reload browser. forcus "Terminal" apps.
 
