@@ -25,6 +25,16 @@ Installation
 
 see also install.sh
 
+Note
+--------------------
+
+if you want to reload Firefox. Please change your System Preferences on MacOSX as below.
+
+check "Enable access for assistive devices"::
+
+ System Preferences > Universal Access > "Enable access for assistive devices"
+
+
 Usage
 --------------------
 
