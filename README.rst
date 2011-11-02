@@ -1,5 +1,5 @@
 ========================
-browsereload-mac.vimv
+browsereload-mac.vim
 ========================
 
 Description
