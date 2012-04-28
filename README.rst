@@ -5,8 +5,8 @@ browsereload-mac.vim
 Description
 =====================
 
-vim plugin to reflesh your browser. 
-this plugin works only MacOSX.
+vim plugin to refresh your browser. 
+this plugin works only on MacOSX.
 
 Required
 =====================
@@ -66,14 +66,14 @@ stop auto reload::
 Settings
 =====================
 
-after reload browser. forcus "Terminal" apps.
+after reloading the browser, change the focus to "Terminal" apps.
 
-if you want to change fourcus application, 
+if you want to change the focus to other application, 
 change variables "g:returnApps" to your appliation.
 
 ::
 
- "change this variables
+ "change this variable
  let g:returnApp = "Terminal" 
 
 if you want to stop returnApp, 
