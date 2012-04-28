@@ -57,6 +57,9 @@ func! s:Reload(app, ...)
         exec l:appcmd . l:reloadcmd . l:devnull
     endif 
 
+    " Force redraw the calling VIM window, incase it doesn't restore
+    " original content cleanly after running exec.
+    redraw!
 endfunc
 
 " }}}
