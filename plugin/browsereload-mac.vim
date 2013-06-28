@@ -255,6 +255,6 @@ You can define "reloadPreHook" and "reploadPostHook" commands.
  " 1. refresh browser. ->  2. execute "reloadPostHook" command.
  let g:reloadPostHook = "sh bulid_assets.sh"
 
-I recommend that you use along with the `vimproc.vim<https://github.com/Shougo/vimproc.vim>`_.
+I recommend that you use along with the `vimproc.vim <https://github.com/Shougo/vimproc.vim>`_.  
 Because hook commands to be performed asynchronously.
 
