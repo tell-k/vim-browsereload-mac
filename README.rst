@@ -25,6 +25,11 @@ Installation
 
 see also install.sh
 
+Documentation(Read The Docs)
+==============================
+
+* https://browsereload-macvim.readthedocs.org/en/latest/
+
 Note
 =====================
 
