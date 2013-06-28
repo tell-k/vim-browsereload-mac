@@ -1,10 +1,10 @@
 "=========================================================
 " File:        browsereload-mac.vim
 " Author:      tell-k <ffk2005[at]gmail.com>
-" Last Change: 03-Jun-2011.
-" Version:     1.0.1
+" Last Change: 28-Jun-2013.
+" Version:     1.1.0
 " WebPage:     https://github.com/tell-k/vim-browsereload-mac
-" License:     BSD
+" License:     MIT Licence
 "==========================================================
 " see also README.rst
 
@@ -36,11 +36,29 @@ if !exists('g:debugMode')
   let g:debugMode = 0 " 0:debug mode off. 1:debug mode on. 
 endif 
 
+
+" }}}
+" {{{ hasVimproc()
+
+function! s:hasVimproc()
+  if !exists('s:exists_vimproc')
+    try
+      call vimproc#version()
+      let s:exists_vimproc = 1
+    catch
+      let s:exists_vimproc = 0
+    endtry
+  endif
+  return s:exists_vimproc
+endfunction
+
 " }}}
 " {{{ Reload()
 
 func! s:Reload(app, ...)
-    let l:appcmd    = "silent !osascript -e 'tell app \"" . a:app . "\" to activate'"
+    let l:appcmd    = "osascript -e 'tell app \"" . a:app . "\" to activate'"
+    let l:returncmd = " -e 'tell app \"" . g:returnApp . "\" to activate'"
+    let l:devnull = g:debugMode ? " " : "> /dev/null 2>&1"
 
     if a:0
         let l:reloadcmd = " -e '" . a:1 . "'"
@@ -48,14 +66,27 @@ func! s:Reload(app, ...)
         let l:reloadcmd = g:defaultReloadCmd
     endif
 
-    let l:returncmd = " -e 'tell app \"" . g:returnApp . "\" to activate'"
-    let l:devnull = g:debugMode ? " " : "> /dev/null 2>&1"
-
     if g:returnAppFlag
-        exec l:appcmd . l:reloadcmd . l:returncmd . l:devnull
+        let l:execcmd = l:appcmd . l:reloadcmd . l:returncmd . l:devnull
     else
-        exec l:appcmd . l:reloadcmd . l:devnull
+        let l:execcmd = l:appcmd . l:reloadcmd . l:devnull
     endif 
+
+    if exists('g:reloadPreHook')
+        let l:execcmd = g:reloadPreHook . " && " . l:execcmd
+    endif
+
+    if exists('g:reloadPostHook')
+        let l:execcmd  = l:execcmd . " && " . g:reloadPostHook
+    endif
+
+    if s:hasVimproc()
+        let s:tmpfile = tempname()
+        call writefile([l:execcmd, "rm -fr " . s:tmpfile], s:tmpfile)
+        call vimproc#pgroup_open("sh " . s:tmpfile)
+    else
+        exec "silent !" . l:execcmd
+    endif
 
     " Force redraw the calling VIM window, incase it doesn't restore
     " original content cleanly after running exec.
@@ -212,3 +243,18 @@ write this setting in your .vimrc
  command! -bar SrStop silent SafariReloadStop
  command! -bar OrStop silent OperaReloadStop
  command! -bar ArStop silent AllBrowserReloadStop
+
+You can define "reloadPreHook" and "reploadPostHook" commands.
+
+::
+
+ " default is not setting.  
+ " 1. execute "reloadPreHook" command. -> 2. refresh browser.
+ let g:reloadPreHook = "sh bulid_assets.sh"
+
+ " 1. refresh browser. ->  2. execute "reloadPostHook" command.
+ let g:reloadPostHook = "sh bulid_assets.sh"
+
+I recommend that you use along with the `vimproc.vim<https://github.com/Shougo/vimproc.vim>`_.
+Because hook commands to be performed asynchronously.
+
