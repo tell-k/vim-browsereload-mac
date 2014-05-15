@@ -39,6 +39,9 @@ check "Enable access for assistive devices"::
 
  System Preferences > Universal Access > "Enable access for assistive devices"
 
+If you're using "OS X Marvericks", please do the following settings.::
+
+ System Preferences > Security & Privacy> Accessbillity> Privacy > Check your Editor.
 
 Usage
 =====================
